@@ -9,7 +9,8 @@ import { Toast } from 'vant';
 import {Dialog} from "vant";
 import { Empty } from 'vant';
 import { Swipe, SwipeItem } from 'vant';
-
+import { NoticeBar } from 'vant';
+Vue.use(NoticeBar);
 Vue.use(Swipe);
 Vue.use(SwipeItem);
 Vue.use(Empty);

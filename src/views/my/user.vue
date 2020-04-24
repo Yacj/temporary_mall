@@ -15,6 +15,17 @@
             </div>
         </div>
         <div class="wrapper">
+            <div class="property">
+                <div class="title acea-row row-between-wrapper">
+                    <div class="">我的财产</div>
+                </div>
+                <div class="nav acea-row row-middle">
+                    <router-link :to="{ path: '/user/account' }" class="item">
+                        <div class="num">{{now_money}}</div>
+                        <div>余额</div>
+                    </router-link>
+                </div>
+            </div>
             <div class="order">
                 <div class="title acea-row row-between-wrapper">
                     <div class="">我的订单</div>
@@ -89,14 +100,11 @@
                 userName: '登陆',
                 MyMenus: [
                     {
-                        name: '我的充值',
-                        pic: require('../../assets/img/order/cz.png')
-                    },
-                    {
                         name: '地址信息',
                         pic: require('../../assets/img/order/address.png')
                     }
-                ]
+                ],
+                now_money:0
             }
         },
         beforeCreate() {
@@ -127,6 +135,13 @@
     }
 </script>
 <style scoped lang="scss">
+    @mixin title{
+        height: .88rem;
+        padding: 0 .3rem;
+        border-bottom: 1px dashed #eee;
+        font-size: .3rem;
+        color: #282828;
+    }
     #user {
         width: 100%;
         height: 100%;
@@ -180,19 +195,37 @@
 
         .wrapper {
             padding: 0.2rem;
-
+            .property{
+                background-color: #fff;
+                margin-top: .15rem;
+                border-radius: .1rem;
+                .title{
+                    @include title
+                }
+                .nav{
+                    background-color: #fff;
+                    border-radius: .06rem;
+                    height: 1.4rem;
+                    .item{
+                        width: 25%;
+                        text-align: center;
+                        font-size: .26rem;
+                        color: #333;
+                        .num{
+                            margin-top: .1rem;
+                            font-size: .36rem;
+                            color: #282828
+                        }
+                    }
+                }
+            }
             .order {
                 background-color: #fff;
                 border-radius: .1rem;
                 margin-top: .15rem;
 
                 .title {
-                    height: .88rem;
-                    padding: 0 .3rem;
-                    border-bottom: 1px dashed #eee;
-                    font-size: .3rem;
-                    color: #282828;
-
+                    @include title;
                     .allOrder {
                         font-size: .26rem;
                         color: #666;
@@ -222,7 +255,6 @@
                             position: relative;
 
                             img {
-                                width: 100%;
                                 height: 100%;
                             }
                         }
@@ -236,13 +268,8 @@
                 border-radius: .1rem;
 
                 .title {
-                    height: .88rem;
-                    padding: 0 .3rem;
-                    border-bottom: 1px dashed #eee;
-                    font-size: .3rem;
-                    color: #282828;
+                    @include title;
                 }
-
                 .serviceList {
                     padding: .08rem 0 .27rem 0;
 
@@ -260,7 +287,6 @@
                             position: relative;
 
                             img {
-                                width: 100%;
                                 height: 100%;
                             }
                         }
