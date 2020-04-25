@@ -15,17 +15,6 @@
             </div>
         </div>
         <div class="wrapper">
-            <div class="property">
-                <div class="title acea-row row-between-wrapper">
-                    <div class="">我的财产</div>
-                </div>
-                <div class="nav acea-row row-middle">
-                    <router-link :to="{ path: '/user/account' }" class="item">
-                        <div class="num">{{now_money}}</div>
-                        <div>余额</div>
-                    </router-link>
-                </div>
-            </div>
             <div class="order">
                 <div class="title acea-row row-between-wrapper">
                     <div class="">我的订单</div>
@@ -35,25 +24,25 @@
                     </router-link>
                 </div>
                 <div class="orderState acea-row row-middle">
-                    <router-link :to="{ path: '/order/list/' + 0 }" class="item">
+                    <router-link :to="{ path: '/order/list/' + 1 }" class="item">
                         <div class="picture">
                             <img src="../../assets/img/order/fukuan.png"/>
                         </div>
                         <div>待付款</div>
                     </router-link>
-                    <router-link :to="{ path: '/order/list/' + 1 }" class="item">
+                    <router-link :to="{ path: '/order/list/' + 2 }" class="item">
                         <div class="picture">
                             <img src="../../assets/img/order/fahuo.png"/>
                         </div>
                         <div>待发货</div>
                     </router-link>
-                    <router-link :to="{ path: '/order/list/' + 2 }" class="item">
+                    <router-link :to="{ path: '/order/list/' + 3 }" class="item">
                         <div class="picture">
                             <img src="../../assets/img/order/shouhuo.png"/>
                         </div>
                         <div>待收货</div>
                     </router-link>
-                    <router-link :to="{ path: '/order/list/' + 3 }" class="item">
+                    <router-link :to="{ path: '/order/list/' + 4 }" class="item">
                         <div class="picture">
                             <img src="../../assets/img/order/wancheng.png"/>
                         </div>
@@ -61,25 +50,44 @@
                     </router-link>
                 </div>
             </div>
-            <div class="service">
-                <div class="title acea-row row-between-wrapper">
-                    <div class="">我的服务</div>
-                </div>
-                <div class="serviceList acea-row row-middle">
-                    <template v-for="(item, index) in MyMenus">
-                        <div
-                                class="item"
-                                :key="index"
-                                @click="goPages(index)"
-                        >
-                            <div class="picture">
-                                <img :src="item.pic" alt=""/>
-                            </div>
-                            <div>{{ item.name }}</div>
-                        </div>
-                    </template>
-                    <!--<div-->
-                </div>
+<!--            <div class="property">-->
+<!--                <div class="title acea-row row-between-wrapper">-->
+<!--                    <div class="">我的财产</div>-->
+<!--                </div>-->
+<!--                <div class="nav acea-row row-middle">-->
+<!--                    <router-link :to="{ path: '/user/account' }" class="item">-->
+<!--                        <div class="num">{{now_money}}</div>-->
+<!--                        <div>余额</div>-->
+<!--                    </router-link>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="service">-->
+<!--                <div class="title acea-row row-between-wrapper">-->
+<!--                    <div class="">我的服务</div>-->
+<!--                </div>-->
+<!--                <div class="serviceList acea-row row-middle">-->
+<!--                    <template v-for="(item, index) in MyMenus">-->
+<!--                        <div-->
+<!--                                class="item"-->
+<!--                                :key="index"-->
+<!--                                @click="goPages(index)"-->
+<!--                        >-->
+<!--                            <div class="picture">-->
+<!--                                <img :src="item.pic" alt=""/>-->
+<!--                            </div>-->
+<!--                            <div>{{ item.name }}</div>-->
+<!--                        </div>-->
+<!--                    </template>-->
+<!--                    &lt;!&ndash;<div&ndash;&gt;-->
+<!--                </div>-->
+<!--            </div>-->
+            <div class="cell">
+                <router-link to="/my/account">
+                    <van-cell title="我的余额" is-link :value="Balance" icon="balance-o" />
+                </router-link>
+                <router-link to="/my/address">
+                    <van-cell title="收货地址" is-link  icon="location-o" />
+                </router-link>
             </div>
         </div>
 
@@ -104,7 +112,8 @@
                         pic: require('../../assets/img/order/address.png')
                     }
                 ],
-                now_money:0
+                now_money:0,
+                Balance:0
             }
         },
         beforeCreate() {
@@ -292,6 +301,11 @@
                         }
                     }
                 }
+            }
+            .cell{
+                background-color: #fff;
+                margin-top: .15rem;
+                border-radius: .1rem;
             }
         }
     }

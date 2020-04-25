@@ -14,8 +14,6 @@
                 返回首页
             </van-button>
         </van-empty>
-
-        </div>
     </div>
 </template>
 

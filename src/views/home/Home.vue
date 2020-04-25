@@ -19,10 +19,6 @@
                         精品推荐
                     </div>
                 </div>
-                <router-link :to="{ path: '/hot_new_goods/' + 1 }" class="more">
-                    更多
-                    <van-icon name="arrow" class="icon"/>
-                </router-link>
             </div>
             <goods-list :good-list="recommendList"></goods-list>
         </div>
@@ -45,10 +41,12 @@
                 recommendList:[
                     {
                         name:'1',
+                        id:1,
                         price:232
                     },
                     {
                         name:'2',
+                        id:2,
                         price:500
                     }
                 ]
