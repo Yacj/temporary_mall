@@ -36,5 +36,8 @@ export const homeService = {
     },
     addCart(param){
         return post('/cart/addcart',param)
+    },
+    getCart(param){
+        return get('/cart/getcart',param)
     }
 }

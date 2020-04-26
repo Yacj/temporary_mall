@@ -16,12 +16,7 @@ import { AddressList } from 'vant';
 import { AddressEdit } from 'vant';
 import { GoodsAction, GoodsActionIcon, GoodsActionButton } from 'vant';
 import { Sku } from 'vant';
-import { SubmitBar } from 'vant';
-import { Checkbox, CheckboxGroup } from 'vant';
 
-Vue.use(Checkbox);
-Vue.use(CheckboxGroup);
-Vue.use(SubmitBar);
 Vue.use(Sku);
 Vue.use(GoodsAction);
 Vue.use(GoodsActionButton);

@@ -37,7 +37,7 @@
             </template>
             <van-goods-action-icon icon="star-o" text="收藏"  v-show="!sc" @click="handle_likes"/>
             <van-goods-action-icon icon="star" text="已收藏" color="#ff5000"  v-show="sc" @click="handle_likes"/>
-            <van-goods-action-icon icon="cart-o" text="购物车"/>
+            <van-goods-action-icon icon="cart-o" text="购物车" @click="tocart"/>
             <van-goods-action-button
                     color="#3b3b3b"
                     type="warning"
@@ -185,6 +185,11 @@
                 }
                 homeService.addCart(info).then(res=>{
                     this.$toast.success(res.data.success)
+                })
+            },
+            tocart(){
+                this.$router.push({
+                    path:'/cart'
                 })
             }
         },

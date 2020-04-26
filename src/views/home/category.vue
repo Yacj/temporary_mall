@@ -14,11 +14,11 @@
         <div class="content">
             <div class="list">
                 <template v-if="productList.length > 0 ">
-                    <div
+                    <router-link
                             class="item acea-row row-between-wrapper van-hairline--bottom"
                             v-for="(item, index) in productList"
                             :key="index"
-                            @click="goDetail(index)"
+                            :to="{ path: '/detail/' + item.id }"
                     >
                         <div class="picture">
                             <img :src="baseUrl + item.img"/>
@@ -30,7 +30,7 @@
                                 ￥<span class="num">{{ item.price }}</span>
                             </div>
                         </div>
-                    </div>
+                    </router-link>
                 </template>
                 <div class="nodata" v-else>
                     <van-empty image="error" description="暂无数据" />
@@ -84,8 +84,8 @@
                     this.productList = res.data
                 })
             },
-            goDetail() {
-
+            goDetail(index) {
+                console.log(index)
             }
         }
     }
