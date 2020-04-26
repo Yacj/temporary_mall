@@ -25,6 +25,24 @@ const routes = [
         component: () => import('../views/home/Home.vue')
     },
     {
+        path: '/category',
+        name: 'category',
+        meta: {
+            title: '商品分类',
+            wx: true
+        },
+        component: () => import('../views/home/category.vue')
+    },
+    {
+        path: '/cart',
+        name: 'cart',
+        meta: {
+            title: '购物车',
+            wx: true
+        },
+        component: () => import('../views/home/cart.vue')
+    },
+    {
         path: '/detail/:id',
         name: 'detail',
         meta: {
@@ -77,6 +95,15 @@ const routes = [
             wx: true
         },
         component: () => import('../views/my/addressAdd')
+    },
+    {
+        path: '/my/addressEdit/:id',
+        name: 'addressEdit',
+        meta: {
+            title: '修改地址',
+            wx: true
+        },
+        component: () => import('../views/my/addressEdit')
     },
     {
         path: "/order/list/:type?",

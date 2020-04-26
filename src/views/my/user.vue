@@ -91,7 +91,7 @@
             </div>
         </div>
 
-        <tabbar :active="2"></tabbar>
+        <tabbar :active="3"></tabbar>
     </div>
 </template>
 

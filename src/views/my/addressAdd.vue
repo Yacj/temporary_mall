@@ -2,10 +2,11 @@
     <div id="addressAdd">
         <van-address-edit
                 :area-list="areaList"
-                show-postal
+                :show-postal="false"
                 show-delete
                 show-set-default
                 show-search-result
+                @save="onSave"
                 :search-result="searchResult"
                 :area-columns-placeholder="['请选择', '请选择', '请选择']"
         />
@@ -13,11 +14,15 @@
 </template>
 
 <script>
+    import areaList from './../../assets/js/area'
+    import {UserService} from "../../api/user/user";
+    import {cookie} from "../../assets/js/util";
+
     export default {
         name: "addressAdd",
         data() {
             return {
-                areaList:[],
+                areaList: areaList,
                 searchResult: [],
             }
         },
@@ -27,9 +32,48 @@
         beforeDestroy() {
             document.body.style.backgroundColor = ''
         },
+        created() {
+        },
         mounted() {
         },
-        methods: {},
+        methods: {
+            onSave(content) {
+                // addressDetail: "23"
+                // areaCode: "210521"
+                // city: "本溪市"
+                // country: ""
+                // county: "本溪满族自治县"
+                // isDefault: false
+                // name: "姓名"
+                // postalCode: ""
+                // province: "辽宁省"
+                // tel: "15254538905"
+                let isDefault;
+                if (content.isDefault === true) {
+                    isDefault = 1
+                } else {
+                    isDefault = 0
+                }
+                let data = {
+                    openid: cookie.getCookie("openid"),
+                    name: content.name,
+                    phone: content.tel,
+                    address: content.addressDetail,
+                    provincestr: content.province,
+                    citystr: content.city,
+                    areastr: content.county,
+                    default: isDefault
+                }
+                UserService.saveAddress(data).then(res => {
+                    let code = res.code
+                    if (code !== 200) {
+                        return this.$toast.fail(res.msg)
+                    }
+                    this.$toast.success(res.data.result)
+                    this.$router.go(-1);
+                })
+            }
+        },
         component: {
             //someComponent
         }

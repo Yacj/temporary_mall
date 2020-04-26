@@ -24,15 +24,23 @@
             info: ''// 此处为空时 dom不显示
         },
         {
-            index: 1,
+          index:1,
+          name:'分类',
+          path:'/category',
+          icon:'apps-o',
+          dot: false,
+          info:''
+        },
+        {
+            index: 2,
             name: '购物车',
-            path: '/search',
+            path: '/cart',
             icon: 'shopping-cart-o',
             dot: false,
             info: ''
         },
         {
-            index: 2,
+            index: 3,
             name: '我的',
             path: '/my',
             icon: 'manager-o',

@@ -61,4 +61,4 @@ export const formatMoney = num => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g
 export  const wxBrowser = navigator.userAgent.toLowerCase().match(/MicroMessenger/i) == "micromessenger"
 
 /**/
-export const BaseUrl = 'https://www.tuopuvip.com/admin.php'
+export const BaseUrl = 'https://www.tuopuvip.com/'
