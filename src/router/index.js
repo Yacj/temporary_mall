@@ -13,7 +13,10 @@ Vue.use(VueRouter)
 const routes = [
     {
         path: '/',
-        redirect: '/home'
+        redirect: '/home',
+        meta: {
+            wx: true
+        },
     },
     {
         path: '/home',

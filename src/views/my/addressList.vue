@@ -18,6 +18,7 @@
 <script>
     import {homeService} from "../../api/home/home";
     import {UserService} from "../../api/user/user";
+    import {cookie} from "../../assets/js/util";
 
     export default {
         name: "addressList",
@@ -41,7 +42,7 @@
         methods: {
             getAddressList() {
                 UserService.getAddress({
-                    openid: 'oCFpqwlza70KF_fXqci2wJq5RiQQ'
+                    openid: cookie.getCookie("openid")
                 }).then(res => {
                     let list = []
                     let isDefault;
@@ -71,7 +72,7 @@
             select(index){
                 let id = index.id;
                 let data = {
-                    openid: 'oCFpqwlza70KF_fXqci2wJq5RiQQ',
+                    openid:cookie.getCookie("openid"),
                     id:id
                 }
                 UserService.setAddress(data).then(res=>{

@@ -62,3 +62,11 @@ export  const wxBrowser = navigator.userAgent.toLowerCase().match(/MicroMessenge
 
 /**/
 export const BaseUrl = 'https://www.tuopuvip.com/'
+
+export const HTMLDecode = text =>{
+    var temp = document.createElement("div");
+    temp.innerHTML = text;
+    var output = temp.innerText || temp.textContent;
+    temp = null;
+    return output;
+}

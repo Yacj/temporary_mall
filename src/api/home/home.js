@@ -20,6 +20,21 @@ export const homeService = {
         return get('/home/getcolumn',param)
     },
     commodity(param){
-        return get('/home/commodity',param)
+        return get('/Goods/getgoods',param)
+    },
+    goodsDetail(param){
+        return get('/Goods/goodsdetail',param)
+    },
+    addGoodStore(param){
+        return post('/collection/addgoodstore',param)
+    },
+    delGoodStore(param){
+        return post('/collection/delgoodstore',param)
+    },
+    getGoodStore(param){
+        return post('/collection/getgoodstore',param)
+    },
+    addCart(param){
+        return post('/cart/addcart',param)
     }
 }

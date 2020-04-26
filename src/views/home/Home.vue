@@ -38,6 +38,9 @@
                     </div>
                 </router-link>
             </div>
+            <div class="more">
+
+            </div>
         </div>
         <div class="wrapper">
             <div class="title acea-row row-center-wrapper">
@@ -64,6 +67,9 @@
                         </div>
                     </div>
                 </router-link>
+            </div>
+            <div class="more">
+
             </div>
         </div>
         <div class="" style="height: 1.2rem"></div>
@@ -134,7 +140,12 @@
         padding-top: .34rem;
         margin: 0 .3rem;
     }
-
+    .more{
+        height: .8rem;
+        line-height: .8rem;
+        margin-top: .05rem;
+        display: block;
+    }
     .home {
         .my-swipe {
             height: 200px;

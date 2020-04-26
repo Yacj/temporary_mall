@@ -22,21 +22,20 @@
         },
         created() {
             this.resize(document, window);
-            if (wxBrowser) {
-                let openid = cookie.getCookie("openid");
-                let wxInfo = {}
-                wxService.get_wx_user({
-                    openid:openid
-                }).then(res=>{
-                    let code = res.code
-                    let data = res.data
-                    if(code === 200){
-                        wxInfo.nickname = data.nickname;
-                        wxInfo.headimgurl = data.headimgurl
-                        storage.set('wxInfo',wxInfo)
-                    }
-                })
-            }
+            let openid = cookie.getCookie("openid");
+            let wxInfo = {}
+            wxService.get_wx_user({
+                openid: openid
+            }).then(res => {
+                let code = res.code
+                let data = res.data
+                if (code === 200) {
+                    wxInfo.nickname = data.nickname;
+                    wxInfo.headimgurl = data.headimgurl
+                    storage.set('wxInfo', wxInfo)
+                    storage.set('uid', data.id)
+                }
+            })
         },
         methods: {
             resize(doc, win) {
