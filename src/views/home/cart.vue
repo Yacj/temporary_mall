@@ -2,7 +2,8 @@
     <div id="cart">
         <div class="nav acea-row row-between-wrapper">
             <div>
-                购物数量 <span class="num font-color-orange">1</span></div>
+                购物数量 <span class="num font-color-orange">{{length}}</span>
+            </div>
             <div @click="toggleDelBtn">
                 <div class="administrate acea-row row-center-wrapper" v-show="!delFlag">
                     编辑
@@ -13,7 +14,7 @@
             </div>
 
         </div>
-        <div class="cartLit" style="    margin-top: 1.71rem;">
+        <div class="cartLit" style="margin-top: 1rem;">
             <template v-if="cartList.length > 0">
                 <ul class="goods-list cart-list">
                     <li class="goods-item" v-for="(item, index) in cartList">
@@ -36,7 +37,9 @@
                             <div class="goods-price">
                                 <span>¥<b>{{ item.price }}</b></span>
                             </div>
-                            <span class="des"></span>
+                            <span class="des">
+                                库存 {{item.stock}}件
+                            </span>
                             <div class="carnum acea-row row-center-wrapper">
                                 <div class="num-btn reduce" @click="changeQty(true, item)">+</div>
                                 <div class="show-num">{{ item.num }}</div>
@@ -60,7 +63,7 @@
                         </div>
                         <span>全选</span>
                     </div>
-                    <div class="action-btn buy-btn">去结算({{ selectedNum }})</div>
+                    <div class="action-btn buy-btn" @click="goEdit">去结算({{ selectedNum }})</div>
                     <div class="action-btn del-btn" @click="delGoods">删除({{ selectedNum }})</div>
                     <div class="total">合计：<span>¥<b>{{ totalPrice }}</b></span></div>
                 </div>
@@ -69,14 +72,14 @@
                 <van-empty image="error" description="暂无商品，去添加点什么吧"/>
             </div>
         </div>
-        <tabbar :active="2"></tabbar>
+        <div style="height:2.5rem"></div>
     </div>
 </template>
 
 <script>
     import Tabbar from "../../components/Tabbar/Tabbar";
     import {homeService} from "../../api/home/home";
-    import {BaseUrl} from "../../assets/js/util";
+    import {add, BaseUrl, mul, storage} from "../../assets/js/util";
 
     export default {
         name: "cart",
@@ -84,6 +87,7 @@
         data() {
             return {
                 num: 0,
+                length: 0,
                 cartList: [],
                 delFlag: '',
                 checkAllFlag: false,
@@ -92,25 +96,24 @@
                 subtotal: 0
             }
         },
-        beforeCreate() {
-            document.body.style.backgroundColor = 'rgb(245, 245, 245)'
-        },
-        beforeDestroy() {
-            document.body.style.backgroundColor = ''
-        },
         created() {
             this.cartData()
-            let that = this
         },
         methods: {
             async cartData() {
                 let that = this
                 await homeService.getCart({
-                    uid: "14"
+                    uid:storage.get("uid")
                 }).then(res => {
-                    console.log(res)
                     let data = res.data.data
+                    let code = res.code;
+                    if (code !== 200) {
+                        that.cartList = [];
+                        that.length = 0
+                        return
+                    }
                     that.cartList = data
+                    that.length = data.length
                     that.totalPrice = res.data.totalscore
                     that.checkAllFlag = !that.checkAllFlag;
                     that.cartList.forEach(function (item) {
@@ -124,29 +127,39 @@
             selectGoods(item) {
                 item.checked = !item.checked;
                 item.checked ? ++this.selectedNum : --this.selectedNum;
-                // 设置全选
                 this.selectedNum === this.cartList.length
                     ? this.checkAllFlag = true
                     : this.checkAllFlag = false
+                this.countMoney()
             },
             changeQty(isAdd, item) {
-                console.log(item)
-                let num = item.num
-                if (!isAdd && num > 1) {
-                    this.$set(item, 'quantity', --num);
+                let num = item.num,
+                    stock = item.stock;
+                if (isAdd && num < stock) {
+                    this.$set(item, "num", ++num);
+                } else if (!isAdd && num > 1) {
+                    this.$set(item, "num", --num);
                 }
-                this.$set(item, 'subtotal', (item.price * num).toFixed(1));
+                this.countMoney()
+            },
+            countMoney() {
+                let carMoney = 0;
+                let array = this.cartList
+                for (let i = 0; i < array.length; i++) {
+                    if (array[i].checked === true) {
+                        carMoney = add(carMoney, mul(array[i].num, array[i].price));
+                    }
+                }
+                this.totalPrice = carMoney
             },
             checkAll() {
                 let that = this
                 this.checkAllFlag = !this.checkAllFlag;
                 this.cartList.forEach(function (item) {
                     if (that.checkAllFlag) {
-                        // 全选
                         item.checked = true;
                         that.selectedNum = that.cartList.length;
                     } else {
-                        // 取消全选
                         item.checked = false;
                         that.selectedNum = 0;
                     }
@@ -154,22 +167,48 @@
             },
             delGoods() {
                 let cart = this.cartList;
-                this.cart = cart.filter(function (item) {
-                    // return !item.checked;
-                    console.log(item)
-                });
-                // for (var i = 0; i < cart.length; i++) {
-                //     cart[i].checked && cart.splice(i--, 1);
-                // };
-
-                // 重置 被选商品数量、全选状态、删除状态
-                // this.selectedNum = 0;
-                // this.checkAllFlag = false;
-                // this.delFlag = !this.delFlag;
+                let str = "";
+                for (let i = 0; i < cart.length; i++) {
+                    if (cart[i].checked === true) {
+                        str += cart[i].cartid + ","
+                    }
+                }
+                if (str.length > 0) {
+                    str = str.substr(0, str.length - 1);
+                }
+                let data = {
+                    cid: str
+                }
+                homeService.delCart(data).then(res => {
+                    let code = res.code;
+                    if (code !== 200) {
+                        return this.$toast.fail("删除失败")
+                    }
+                    this.cartData()
+                    this.$toast.success(res.data.success)
+                })
             },
             toggleDelBtn: function () {
                 this.delFlag = !this.delFlag;
             },
+            goEdit(){
+                let cart = this.cartList;
+                let str = ""
+                for (let i = 0; i < cart.length; i++) {
+                    if (cart[i].checked === true) {
+                        str += cart[i].sid+":"+cart[i].num + ","
+                    }
+                }
+                if(str === ''){
+                    return this.$toast.fail("请选择商品进行结算")
+                }
+                if (str.length > 0) {
+                    str = str.substr(0, str.length - 1);
+                }
+                this.$router.push({
+                    path: '/order/submit/' + str
+                })
+            }
         }
     }
 </script>
@@ -190,12 +229,13 @@
             position: fixed;
             left: 0;
             z-index: 5;
-            top: .16rem;
+            top:0;
             border-bottom: 1px solid #f5f5f5;
 
             .num {
             }
-            .administrate{
+
+            .administrate {
                 font-size: .26rem;
                 color: #282828;
                 width: 1.1rem;
@@ -285,12 +325,14 @@
                     font-size: 12px;
                     color: #888;
                 }
-                .carnum{
+
+                .carnum {
                     height: .44rem;
                     position: absolute;
                     bottom: .07rem;
                     right: 0;
-                    div{
+
+                    div {
                         border: 1px solid #a4a4a4;
                         width: .66rem;
                         text-align: center;
@@ -299,20 +341,24 @@
                         font-size: .28rem;
                         color: #a4a4a4;
                     }
-                    .reduce{
+
+                    .reduce {
                         border-right: 0;
                         border-radius: .03rem 0 0 .03rem;
                         line-height: .39rem;
                     }
-                    .show-num{
+
+                    .show-num {
                         color: #282828;
                     }
-                    .plus{
+
+                    .plus {
                         border-left: 0;
                         border-radius: 0 .03rem .03rem 0;
                         line-height: .38rem;
                     }
                 }
+
                 .goods-num {
                     position: absolute;
                     right: 10px;
@@ -337,9 +383,9 @@
         }
 
         .action-bar {
-            position: absolute;
+            position: fixed;
             left: 0;
-            bottom: 50px;
+            bottom: 0;
             width: 100%;
             height: 52px;
             font-size: 15px;

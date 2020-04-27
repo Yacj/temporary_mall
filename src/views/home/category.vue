@@ -96,8 +96,8 @@
     #category {
         width: 100%;
         height: 100%;
+        background: #fff;
         position: absolute;
-
         .aside {
             position: fixed;
             width: 1.8rem;

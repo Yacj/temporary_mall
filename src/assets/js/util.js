@@ -70,3 +70,53 @@ export const HTMLDecode = text =>{
     temp = null;
     return output;
 }
+export function mul(arg1, arg2) {
+    var m = 0,
+        s1 = arg1.toString(),
+        s2 = arg2.toString();
+    try {
+        m += s1.split(".")[1].length;
+    } catch (e) {
+        m = 0;
+    }
+    try {
+        m += s2.split(".")[1].length;
+    } catch (e) {
+        m = m || 0;
+    }
+    return (
+        (Number(s1.replace(".", "")) * Number(s2.replace(".", ""))) /
+        Math.pow(10, m)
+    );
+}
+
+//加法函数，用来得到精确的加法结果
+//说明：javascript的加法结果会有误差，在两个浮点数相加的时候会比较明显。这个函数返回较为精确的加法结果。
+//调用：add(arg1,arg2)
+//返回值：arg1加上arg2的精确结果
+export function add(arg1, arg2) {
+    var r1, r2, m, n;
+    try {
+        r1 = arg1.toString().split(".")[1].length;
+    } catch (e) {
+        r1 = 0;
+    }
+    try {
+        r2 = arg2.toString().split(".")[1].length;
+    } catch (e) {
+        r2 = 0;
+    }
+    m = Math.pow(10, Math.max(r1, r2));
+    n = r1 >= r2 ? r1 : r2;
+    return ((arg1 * m + arg2 * m) / m).toFixed(n);
+}
+export function  timestampToTime(timestamp) {
+    var date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+    var Y = date.getFullYear() + '-';
+    var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+    var D = date.getDate() + ' ';
+    var h = date.getHours() + ':';
+    var m = date.getMinutes() + ':';
+    var s = date.getSeconds();
+    return Y+M+D+h+m+s;
+}

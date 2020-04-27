@@ -69,7 +69,6 @@
                 </router-link>
             </div>
             <div class="more">
-
             </div>
         </div>
         <div class="" style="height: 1.2rem"></div>
@@ -104,11 +103,12 @@
             this.getHomeData()
         },
         mounted() {
-            // this.$store.commit('showLoading')
+            //
             //    this.$store.commit('hideLoading')
         },
         methods: {
             async getHomeData() {
+                this.$store.commit('showLoading')
                 await homeService.Get_API_PC_Image().then(res => {
                     let data = res.data;
                     this.banner = data
@@ -121,6 +121,7 @@
                     let data = res.data;
                     this.ProductList = data
                 })
+                this.$store.commit('hideLoading')
             },
             test() {
                 this.$router.push({
@@ -147,6 +148,9 @@
         display: block;
     }
     .home {
+        width: 100%;
+        height: 100%;
+        position: absolute;
         .my-swipe {
             height: 200px;
 

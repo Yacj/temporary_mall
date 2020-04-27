@@ -3,7 +3,7 @@
         <van-address-edit
                 :area-list="areaList"
                 :show-postal="false"
-                show-delete
+                :show-delete="false"
                 show-set-default
                 show-search-result
                 @save="onSave"

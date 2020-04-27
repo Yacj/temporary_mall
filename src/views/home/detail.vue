@@ -30,14 +30,14 @@
 
                 </div>
             </div>
+            <div style="height: 1rem"></div>
         </div>
         <van-goods-action>
             <template >
-
             </template>
             <van-goods-action-icon icon="star-o" text="收藏"  v-show="!sc" @click="handle_likes"/>
             <van-goods-action-icon icon="star" text="已收藏" color="#ff5000"  v-show="sc" @click="handle_likes"/>
-            <van-goods-action-icon icon="cart-o" text="购物车" @click="tocart"/>
+            <van-goods-action-icon icon="cart-o" text="购物车" @click="tocart" :badge="badge"/>
             <van-goods-action-button
                     color="#3b3b3b"
                     type="warning"
@@ -62,7 +62,7 @@
 
 <script>
     import {homeService} from "../../api/home/home";
-    import {BaseUrl, cookie, HTMLDecode} from "../../assets/js/util";
+    import {BaseUrl, cookie, HTMLDecode, storage} from "../../assets/js/util";
 
     export default {
         name: "detail",
@@ -85,12 +85,13 @@
                 },
                 show: false,
                 sc:true,
+                badge:'',
                 sku: {
                     id: '',
                     tree: [],
                     price: "1.00",
                     stock_num: 17,
-                    collection_id: 2261,
+                    collection_id: '',
                     none_sku: true,
                     hide_stock: false
                 }
@@ -106,7 +107,7 @@
             getDetailData() {
                 let data = {
                     sid:this.id,
-                    uid:"14"
+                    uid:storage.get("uid")
                 }
               homeService.goodsDetail({
                   id:this.id
@@ -121,6 +122,7 @@
 
                   this.goods.picture = this.baseUrl+data.img
                   this.sku.id = data.id;
+                  this.sku.collection_id = data.id
                   this.sku.price = data.price
                   this.sku.stock_num =  data.stock
               })
@@ -145,8 +147,9 @@
                 return str;
             },
             onBuyClicked(data) {
+                let str = data.selectedSkuComb.id + ":"+data.selectedNum
                 this.$router.push({
-                    path: '/order/submit/' + this.id
+                    path: '/order/submit/' + str
                 })
             },
             onClickButton() {
@@ -155,7 +158,7 @@
             handle_likes(){
                 let data = {
                     sid:this.id,
-                    uid:"14"
+                    uid:storage.get("uid")
                 }
                 if(this.sc){
                     this.sc = false
@@ -180,10 +183,12 @@
             addCart(data){
                 let info = {
                     sid:this.id,
-                    uid:"14",
+                    uid:storage.get("uid"),
                     number:data.selectedNum
                 }
+                this.badge = data.selectedNum
                 homeService.addCart(info).then(res=>{
+                    this.show = false;
                     this.$toast.success(res.data.success)
                 })
             },
@@ -262,5 +267,11 @@
                 }
             }
         }
+    }
+    ::v-deep .van-button--warning{
+        background: #3b3b3b;
+    }
+    ::v-deep .van-button--danger{
+        background: $theme;
     }
 </style>
