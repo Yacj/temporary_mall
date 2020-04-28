@@ -70,6 +70,7 @@ export const HTMLDecode = text =>{
     temp = null;
     return output;
 }
+
 export function mul(arg1, arg2) {
     var m = 0,
         s1 = arg1.toString(),
@@ -110,6 +111,7 @@ export function add(arg1, arg2) {
     n = r1 >= r2 ? r1 : r2;
     return ((arg1 * m + arg2 * m) / m).toFixed(n);
 }
+
 export function  timestampToTime(timestamp) {
     var date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
     var Y = date.getFullYear() + '-';

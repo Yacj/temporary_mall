@@ -6,7 +6,19 @@ export const OderService = {
     getAddress(param){
         return get('/settle/getaddre',param)
     },
+    getOrder(param){
+        return get('/order/getorder',param)
+    },
     saveOrder(param){
         return post('/order/saveorder',param)
+    },
+    getOrderDetail(param){
+        return get('/order/getorderdateil',param)
+    },
+    delOrder(param){
+        return post('/order/delorder',param)
+    },
+    setOrder(param){
+        return post('/order/setorder',param)
     }
 }

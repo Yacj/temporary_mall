@@ -22,7 +22,7 @@
             </div>
         </div>
         <div class="">
-            <van-button type="primary" block round style="margin-bottom: 0.2rem">查看订单</van-button>
+            <van-button type="primary" block round style="margin-bottom: 0.2rem"  @click="$router.push({ path: '/order/detail/' + id })">查看订单</van-button>
             <van-button  type="primary" plain block round to="/home">返回首页</van-button>
         </div>
     </div>
@@ -36,6 +36,7 @@
         name: "status",
         data() {
             return {
+                id:'',
                 status:'1',
                 orderstatus:'',
                 order_id:'',
@@ -60,6 +61,7 @@
                     this.order_id = data.order;
                     this.orderTime = timestampToTime(data.time)
                     this.status = data.status
+                    this.id =data.id
                     if(data.status === "0"){
                         this.orderstatus = '支付失败'
                     }else{

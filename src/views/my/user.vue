@@ -18,12 +18,18 @@
             <div class="order">
                 <div class="title acea-row row-between-wrapper">
                     <div class="">我的订单</div>
-                    <router-link :to="'/order/list/'" class="allOrder">
-                        全部订单
-                        <van-icon name="arrow" class="icon"/>
-                    </router-link>
+<!--                    <router-link :to="'/order/list/'" class="allOrder">-->
+<!--                        全部订单-->
+<!--                        <van-icon name="arrow" class="icon"/>-->
+<!--                    </router-link>-->
                 </div>
                 <div class="orderState acea-row row-middle">
+                    <router-link :to="{ path: '/order/list/'}" class="item">
+                        <div class="picture">
+                            <img src="../../assets/img/order/order.png"/>
+                        </div>
+                        <div>全部订单</div>
+                    </router-link>
                     <router-link :to="{ path: '/order/list/' + 1 }" class="item">
                         <div class="picture">
                             <img src="../../assets/img/order/fukuan.png"/>
@@ -41,12 +47,6 @@
                             <img src="../../assets/img/order/shouhuo.png"/>
                         </div>
                         <div>待收货</div>
-                    </router-link>
-                    <router-link :to="{ path: '/order/list/' + 4 }" class="item">
-                        <div class="picture">
-                            <img src="../../assets/img/order/wancheng.png"/>
-                        </div>
-                        <div>已完成</div>
                     </router-link>
                 </div>
             </div>

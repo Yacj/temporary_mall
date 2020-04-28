@@ -172,12 +172,6 @@
                 wxService.wx_Pay(data).then(res => {
                     let data = res
                     this.onBridgeReady(data)
-                    // appId: "wxb39a74613096584f"
-                    // nonceStr: "mNgcIRq9f2JybzCX"
-                    // package: "prepay_id=wx27134758355211882340e8371082063100"
-                    // paySign: "e6e28ff6d296f15ed322f61ca57d5323"
-                    // signType: "MD5"
-                    // timeStamp: 1587966478
                 })
             },
             onBridgeReady(data) {
@@ -199,7 +193,7 @@
                         orderInfo.batch = that.id
                         if(msg === 'get_brand_wcpay_request:ok'){
                             that.$toast.success("支付成功")
-                            orderInfo.status = 1
+                            orderInfo.status = 2
                             storage.set('order',orderInfo)
                             that.$router.push({
                                 path:'/order/status'

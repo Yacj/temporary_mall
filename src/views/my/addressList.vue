@@ -44,6 +44,11 @@
                 UserService.getAddress({
                     openid: cookie.getCookie("openid")
                 }).then(res => {
+                    let code = res.code
+                    if(code === 400){
+                        this.list = []
+                        return
+                    }
                     let list = []
                     let isDefault;
                     res.data.map(res=>{

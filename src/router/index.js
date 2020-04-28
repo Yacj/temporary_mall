@@ -136,6 +136,15 @@ const routes = [
         component: () => import("../views/order/status")
     },
     {
+        path: "/order/detail/:id",
+        name: "orderDetail",
+        meta: {
+            title: "订单详情",
+            wx: true
+        },
+        component: () => import("../views/order/OrderDetail")
+    },
+    {
         path: '/warn',
         name: 'warn',
         meta: {
