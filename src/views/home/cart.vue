@@ -159,9 +159,11 @@
                     if (that.checkAllFlag) {
                         item.checked = true;
                         that.selectedNum = that.cartList.length;
+                        that.countMoney()
                     } else {
                         item.checked = false;
                         that.selectedNum = 0;
+                        that.countMoney()
                     }
                 });
             },

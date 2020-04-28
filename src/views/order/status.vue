@@ -44,14 +44,13 @@
         },
         created() {
             this.getStatus()
-            console.log(timestampToTime(1587977391))
         },
         methods: {
             getStatus(){
                 let order = storage.get('order')
                 let data = {
                     batch:order.batch,
-                    openid:'oCFpqwmnc4aJppns2qduNxwltI2s',
+                    openid:cookie.getCookie("openid"),
                     addressid:order.addressid,
                     order:order.order,
                     status:order.status
