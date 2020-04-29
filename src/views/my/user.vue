@@ -83,7 +83,7 @@
 <!--            </div>-->
             <div class="cell">
                 <router-link to="/my/account">
-                    <van-cell title="我的余额" is-link :value="Balance" icon="balance-o" />
+                    <van-cell title="会员充值" is-link  icon="balance-o" />
                 </router-link>
                 <router-link to="/my/address">
                     <van-cell title="收货地址" is-link  icon="location-o" />

@@ -18,5 +18,8 @@ export const UserService = {
     },
     editAddress(param){
         return post('/address/editaddre',param)
+    },
+    addBalance(param){
+        return post('/Balance/addBalance',param)
     }
 }

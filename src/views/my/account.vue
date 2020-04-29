@@ -13,6 +13,9 @@
 </template>
 
 <script>
+    import {wxService} from "../../api/wx/wx";
+    import {cookie, storage} from "../../assets/js/util";
+
     export default {
         name: "account",
         data() {
@@ -20,9 +23,23 @@
                 account:0
             }
         },
+        created() {
+            let openid = cookie.getCookie("openid");
+            wxService.get_wx_user({
+                openid: openid
+            }).then(res => {
+                let code = res.code
+                let data = res.data
+                if (code === 200) {
+                    this.account = data.balance
+                }
+            })
+        },
         mounted() {
         },
-        methods: {},
+        methods: {
+
+        },
         component: {
             //someComponent
         }

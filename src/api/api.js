@@ -6,7 +6,7 @@ axios.defaults.timeout = 50000;
 // 请求头
 axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8;multipart/form-data'
 // 请求代理
-axios.defaults.baseURL = 'https://www.tuopuvip.com/admin.php/api';
+axios.defaults.baseURL = 'https://www.tuopuvip.com/admin.php/gshapi';
 // axios.defaults.baseURL = '/api';
 
 //  axios.interceptors.request.use(config => {

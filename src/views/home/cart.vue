@@ -16,39 +16,39 @@
         </div>
         <div class="cartLit" style="margin-top: 1rem;">
             <template v-if="cartList.length > 0">
-                <ul class="goods-list cart-list">
-                    <li class="goods-item" v-for="(item, index) in cartList">
-                        <div class="item-selector">
-                            <div class="icon-selector" :class="{'selector-active': item.checked}"
-                                 @click="selectGoods(item)">
-                                <svg t="1504061791962" class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
-                                     xmlns="http://www.w3.org/2000/svg" p-id="2922"
-                                     xmlns:xlink="http://www.w3.org/1999/xlink" width="12" height="12">
-                                    <path d="M908.288 127.488l-537.6 537.6-254.976-254.976L0 525.824l254.976 254.976 115.712 115.712L486.4 780.8l537.6-537.6z"
-                                          fill="#ffffff" p-id="2923"></path>
-                                </svg>
+                    <transition-group appear tag="ul">
+                        <li class="goods-item" v-for="(item, index) in cartList" :key="index">
+                            <div class="item-selector">
+                                <div class="icon-selector" :class="{'selector-active': item.checked}"
+                                     @click="selectGoods(item)">
+                                    <svg t="1504061791962" class="icon" style="" viewBox="0 0 1024 1024" version="1.1"
+                                         xmlns="http://www.w3.org/2000/svg" p-id="2922"
+                                         xmlns:xlink="http://www.w3.org/1999/xlink" width="12" height="12">
+                                        <path d="M908.288 127.488l-537.6 537.6-254.976-254.976L0 525.824l254.976 254.976 115.712 115.712L486.4 780.8l537.6-537.6z"
+                                              fill="#ffffff" p-id="2923"></path>
+                                    </svg>
+                                </div>
                             </div>
-                        </div>
-                        <div class="goods-img">
-                            <img :src="baseUrl+item.smallImage" :alt="item.name">
-                        </div>
-                        <div class="goods-info">
-                            <p class="goods-title">{{ item.name }}</p>
-                            <div class="goods-price">
-                                <span>¥<b>{{ item.price }}</b></span>
+                            <div class="goods-img">
+                                <img :src="baseUrl+item.smallImage" :alt="item.name">
                             </div>
-                            <span class="des">
+                            <div class="goods-info">
+                                <p class="goods-title">{{ item.name }}</p>
+                                <div class="goods-price">
+                                    <span>¥<b>{{ item.price }}</b></span>
+                                </div>
+                                <span class="des">
                                 库存 {{item.stock}}件
                             </span>
-                            <div class="carnum acea-row row-center-wrapper">
-                                <div class="num-btn reduce" @click="changeQty(true, item)">+</div>
-                                <div class="show-num">{{ item.num }}</div>
-                                <div class="num-btn plus" @click="changeQty(false, item)">-</div>
+                                <div class="carnum acea-row row-center-wrapper">
+                                    <div class="num-btn reduce" @click="changeQty(true, item)">+</div>
+                                    <div class="show-num">{{ item.num }}</div>
+                                    <div class="num-btn plus" @click="changeQty(false, item)">-</div>
+                                </div>
                             </div>
-                        </div>
-                    </li>
-                    <li style="height: 1rem"></li>
-                </ul>
+                        </li>
+                    </transition-group>
+                <div style="height: 1rem"></div>
                 <div class="action-bar" :class="{ 'del-box': delFlag }">
                     <!-- del-box -->
                     <div class="g-selector" @click="checkAll">
@@ -216,6 +216,19 @@
 </script>
 
 <style scoped lang="scss">
+    .v-enter,
+    .v-leave-to {
+        opacity: 0; //设置元素的不透明级别：
+        transform: translateY(80px);// 开始和结束位置在Y轴的80px处
+    }
+    .v-enter-active,
+    .v-leave-active {
+        transition: all 0.6s ease;// 从Y轴的80px处渐渐移动到上面
+    }
+    /* 下面的 .v-move 和 .v-leave-active 配合使用，能够实现列表后续的元素，渐渐地漂上来的效果 */
+    .v-move { transition: all 0.6s ease; }
+    .v-leave-active{ position: absolute; }
+
     #cart {
         width: 100%;
         height: 100%;

@@ -1,27 +1,7 @@
 # vant-template
 
-## Vue-cli3 + Vue2.0 + vant 项目脚手架
+## mall
 ```
-配置了 vant + axiso + 重置css 的脚手架 开箱即用
+vue+vant+scss 五天开发完成一个基本的微信商城系统
 ```
-```
-如要 最新的package.json。安装 npm install -g npm-check-updates，
-依次输入 ncu ，npm install 。则可以完成更新
-```
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+预览地址：<https://www.tuopuvip.com/admin.php/api/weixin/index>
