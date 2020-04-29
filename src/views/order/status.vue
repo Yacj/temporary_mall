@@ -1,6 +1,6 @@
 <template>
     <div id="status">
-        <div class="iconfont icon-duihao2" v-if="status === '1'">
+        <div class="iconfont icon-duihao2" v-if="status === '2'">
         </div>
         <div class="iconfont icon-chahao2" v-else style="background: red;text-shadow: none">
         </div>
@@ -37,7 +37,7 @@
         data() {
             return {
                 id:'',
-                status:'1',
+                status:'2',
                 orderstatus:'',
                 order_id:'',
                 orderTime:''

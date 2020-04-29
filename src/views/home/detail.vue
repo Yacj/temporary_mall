@@ -30,7 +30,7 @@
 
                 </div>
             </div>
-            <div style="height: 1rem"></div>
+            <div style="height: 1.3rem"></div>
         </div>
         <van-goods-action>
             <template >
@@ -147,6 +147,9 @@
                 return str;
             },
             onBuyClicked(data) {
+                // if(data.selectedSkuComb.stock_num === 0){
+                //     return this.$toast.fail("此商品库存不足,无法购买")
+                // }
                 let str = data.selectedSkuComb.id + ":"+data.selectedNum
                 this.$router.push({
                     path: '/order/submit/' + str
@@ -181,6 +184,9 @@
                 }
             },
             addCart(data){
+                // if(data.selectedSkuComb.stock_num === 0){
+                //     return this.$toast.fail("此商品库存不足,无法加入购物车")
+                // }
                 let info = {
                     sid:this.id,
                     uid:storage.get("uid"),

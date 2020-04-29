@@ -86,14 +86,7 @@
                 </div>
             </div>
         </div>
-        <!--        <div class="moneyList">-->
-        <!--            <div class="item acea-row row-between-wrapper">-->
-        <!--                <div>商品总价：</div>-->
-        <!--                <div class="money">-->
-
-        <!--                </div>-->
-        <!--            </div>-->
-        <!--        </div>-->
+        <div style="height: 1.5rem;"></div>
         <div class="footer acea-row row-between-wrapper">
             <div class="">合计
                 <span>

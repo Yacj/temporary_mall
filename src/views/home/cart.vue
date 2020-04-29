@@ -47,6 +47,7 @@
                             </div>
                         </div>
                     </li>
+                    <li style="height: 1rem"></li>
                 </ul>
                 <div class="action-bar" :class="{ 'del-box': delFlag }">
                     <!-- del-box -->
@@ -72,7 +73,6 @@
                 <van-empty image="error" description="暂无商品，去添加点什么吧"/>
             </div>
         </div>
-        <div style="height:2.5rem"></div>
     </div>
 </template>
 

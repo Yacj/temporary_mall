@@ -82,11 +82,9 @@
                 <van-button round type="primary" size="small" style="margin-left: .18rem" @click="pay">立即付款</van-button>
             </template>
             <template v-if="orderInfo.status === 2">
-                <van-button plain hairline round type="default" size="small" class="bnt" @click="delOrder(orderInfo.id)">取消订单</van-button>
-                <van-button round type="primary" size="small" style="margin-left: .18rem">催发货</van-button>
+                <van-button round type="primary" size="small" style="margin-left: .18rem" @click="urge">催发货</van-button>
             </template>
             <template v-if="orderInfo.status === 4">
-                <van-button plain hairline round type="default" size="small" class="bnt" @click="delOrder(orderInfo.id)">取消订单</van-button>
                 <van-button round type="primary" size="small" style="margin-left: .18rem" @click="setOrder(orderInfo.id)">确认收货</van-button>
             </template>
             <template v-if="orderInfo.status === 6">
@@ -116,8 +114,14 @@
                 orderInfo: {},
                 addressInfo: {},
                 total: 0,
-                BaseUrl: BaseUrl
+                BaseUrl: BaseUrl,
             }
+        },
+        beforeRouteLeave(to, from, next){
+            if(to.name === 'StatusOrder'){
+                this.$router.push({name:'home'});
+            }
+            next();
         },
         created() {
             this.id = this.$route.params.id
@@ -129,6 +133,9 @@
             }
         },
         methods: {
+            urge(){
+              this.$toast.success("已完成催促，请耐心等待")
+            },
             statusMsg(status) {
                 return STATUS[status];
             },
