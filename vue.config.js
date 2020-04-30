@@ -1,6 +1,24 @@
 const autoprefixer = require('autoprefixer');
 const pxtoviewport = require('postcss-px-to-viewport');
+const UglifyPlugin = require('uglifyjs-webpack-plugin')
 module.exports = {
+    configureWebpack:(config)=>{
+        let optimization = {
+            minimizer: [new UglifyPlugin({
+                uglifyOptions: {
+                    warnings: false,
+                    compress: {
+                        drop_console: true,
+                        drop_debugger: false,
+                        pure_funcs: ['console.log']
+                    }
+                }
+            })]
+        }
+        Object.assign(config, {
+            optimization
+        })
+    },
     publicPath:'/mall',
     outputDir: 'mall',
     productionSourceMap: false,

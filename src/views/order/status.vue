@@ -54,6 +54,7 @@
                     openid:cookie.getCookie("openid"),
                     addressid:order.addressid,
                     order:order.order,
+                    paytype:order.paytype,
                     status:order.status
                 }
                 OderService.saveOrder(data).then(res=>{
@@ -62,6 +63,14 @@
                     this.orderTime = timestampToTime(data.time)
                     this.status = data.status
                     this.id =data.id
+                    if(res.code === 400){
+                       this.$dialog.alert({
+                           message: '您的余额不足，购买失败',
+                       }).then(() => {
+                           this.$router.go(-1)
+                       });
+                       return
+                    }
                     if(data.status === "0"){
                         this.orderstatus = '支付失败'
                     }else{

@@ -9,9 +9,9 @@
                 </van-swipe-item>
             </van-swipe>
         </div>
-        <div class="notice">
-            <van-notice-bar text="上线了" left-icon="volume-o"/>
-        </div>
+<!--        <div class="notice">-->
+<!--            <van-notice-bar text="上线了" left-icon="volume-o"/>-->
+<!--        </div>-->
         <div class="wrapper">
             <div class="title acea-row row-center-wrapper">
                 <img src="../../assets/img/leftTxt.png" alt="">

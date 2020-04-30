@@ -57,13 +57,13 @@
                 <div class="list">
                     <div
                             class="payItem acea-row row-middle"
-                            :class="active === 'weixin' ? 'on' : ''"
-                            @click="payItem('weixin')"
+                            :class="active === '1' ? 'on' : ''"
+                            @click="payItem('1')"
                     >
                         <div class="name acea-row row-center-wrapper">
                             <div
                                     class="iconfont icon-weixin21"
-                                    :class="active === 'weixin' ? 'bounceIn' : ''"
+                                    :class="active === '1' ? 'bounceIn' : ''"
                             ></div>
                             微信支付
                         </div>
@@ -71,17 +71,17 @@
                     </div>
                     <div
                             class="payItem acea-row row-middle"
-                            :class="active === 'yue' ? 'on' : ''"
-                            @click="payItem('yue')"
+                            :class="active === '2' ? 'on' : ''"
+                            @click="payItem('2')"
                     >
                         <div class="name acea-row row-center-wrapper">
                             <div
                                     class="iconfont icon-yue1"
-                                    :class="active === 'yue' ? 'bounceIn' : ''"
+                                    :class="active === '2' ? 'bounceIn' : ''"
                             ></div>
                             余额支付
                         </div>
-                        <div class="tip">可用余额：{{ now_money || 0 }}</div>
+                        <div class="tip">可用余额：￥{{ now_money || 0 }}</div>
                     </div>
                 </div>
             </div>
@@ -116,7 +116,7 @@
                 now_money: 0,
                 totalprice: 0,
                 BaseUrl: BaseUrl,
-                active: 'weixin' ? "weixin" : "yue",
+                active: '1' ? "1" : "2",
                 addressId:''
             }
         },
@@ -148,11 +148,38 @@
                     this.order = res.data.order
                     this.totalprice = res.data.totalprice
                 })
+                let openid = cookie.getCookie("openid");
+                wxService.get_wx_user({
+                    openid: openid
+                }).then(res => {
+                    let code = res.code
+                    let data = res.data
+                    if (code === 200) {
+                        this.now_money = data.balance
+                    }
+                })
             },
             payItem(index) {
                 this.active = index;
             },
             pay() {
+                if(this.active === "2"){
+                    this.$dialog.confirm({
+                        message:'您确认要用余额结算么？'
+                    }).then(res=>{
+                        let orderInfo = {}
+                        orderInfo.addressid = this.addressId;
+                        orderInfo.order = this.order;
+                        orderInfo.batch = this.id
+                        orderInfo.status = 2
+                        orderInfo.paytype = 2;
+                        storage.set('order',orderInfo)
+                        this.$router.push({
+                            path:'/order/status'
+                        })
+                    })
+                    return
+                }
                 if(JSON.stringify(this.addressInfo )=== '{}'){
                     return this.$toast.fail("请填写地址")
                 }
@@ -184,6 +211,7 @@
                         orderInfo.addressid = that.addressId;
                         orderInfo.order = that.order;
                         orderInfo.batch = that.id
+                        orderInfo.paytype = 1;
                         if(msg === 'get_brand_wcpay_request:ok'){
                             that.$toast.success("支付成功")
                             orderInfo.status = 2

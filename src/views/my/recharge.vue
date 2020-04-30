@@ -53,7 +53,7 @@
                     {
                         price1: '500',
                         price2: '50',
-                        price:50,
+                        price:500,
                     },
                     {
                         price1: '1000',
@@ -69,18 +69,22 @@
             }
         },
         mounted() {
-            let time = new Date();
-            let Year = time.getFullYear()
-            let Month = ("0" + (time.getMonth() + 1)).slice(-2);
-            let getDate = time.getDate();
-            this.order = Year + "" + Month + "" + getDate + this.randomString(5)
+            this.getOrder()
         },
         methods: {
+            getOrder(){
+                let time = new Date();
+                let Year = time.getFullYear()
+                let Month = ("0" + (time.getMonth() + 1)).slice(-2);
+                let getDate = time.getDate();
+                this.order = Year + "" + Month + "" + getDate + this.randomString(5)
+            },
             pay() {
                 if (this.current === 0) {
                     return this.$toast.fail('请选择充值金额')
                 }
                 this.Money = this.current
+                this.getOrder()
                 let data = {
                     bodys: "充值" + this.order,
                     order: this.order,

@@ -63,7 +63,7 @@
             <div class="item acea-row row-between">
                 <div>支付方式：</div>
                 <div class="conter acea-row row-middle row-right">
-                    微信支付
+                    {{orderInfo.paytype === 1 ? '微信支付':'余额支付'}}
                 </div>
             </div>
         </div>
@@ -71,7 +71,7 @@
             <div class="actualPay acea-row row-right">
                 实付款：
                 <div class="money">
-                    ￥{{orderInfo.totalprice}}
+                    ￥{{orderInfo.totalprice }}
                 </div>
             </div>
         </div>
